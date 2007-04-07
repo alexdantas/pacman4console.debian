@@ -1,0 +1,35 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## 01_change_Makefile.dpatch by Joao Eriberto Mota Filho
+## <eriberto@eriberto.pro.br>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: Adjust Makefile to Debian
+
+@DPATCH@
+
+diff -Naur pacman4console-1.2.orig/Makefile pacman4console-1.2/Makefile
+--- pacman4console-1.2.orig/Makefile	2007-01-03 10:36:25.000000000 -0200
++++ pacman4console-1.2/Makefile	2007-01-03 11:01:51.000000000 -0200
+@@ -3,15 +3,13 @@
+ 	gcc -lncurses pacmanedit.c -o pacmanedit
+ 
+ install:	all
+-	cp pacman /usr/local/bin
+-	cp pacmanedit /usr/local/bin
+-	mkdir -p /usr/local/share/pacman
+-	cp -fR Levels/ /usr/local/share/pacman/
+-	chown root:games /usr/local/bin/pacman
+-	chown root:games /usr/local/share/pacman -R
+-	chmod 750 /usr/local/bin/pacman
+-	chmod 750 /usr/local/bin/pacmanedit
+-	chmod 750 /usr/local/share/pacman/ -R
++	cp pacman $(DESTDIR)/usr/games/pacman4console
++	cp pacmanedit $(DESTDIR)/usr/bin/pacman4consoleedit
++	mkdir -p $(DESTDIR)/usr/share/pacman4console
++	cp -fR Levels/*.dat $(DESTDIR)/usr/share/pacman4console/Levels
++	chown root:games $(DESTDIR)/usr/games/pacman4console
++	chown root:games $(DESTDIR)/usr/bin/pacman4consoleedit
++	chown root:games $(DESTDIR)/usr/share/pacman4console -R
+ 
+ uninstall:
+ 	rm -f /usr/local/bin/pacman
