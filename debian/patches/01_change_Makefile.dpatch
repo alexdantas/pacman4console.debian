@@ -1,16 +1,15 @@
 #! /bin/sh /usr/share/dpatch/dpatch-run
-## 01_change_Makefile.dpatch by Joao Eriberto Mota Filho
-## <eriberto@eriberto.pro.br>
+## Change Makefile.dpatch by Joao Eriberto Mota Filho <eriberto@eriberto.pro.br>
 ##
 ## All lines beginning with `## DP:' are a description of the patch.
-## DP: Adjust Makefile to Debian
+## DP: Makefile compliant with Debian
 
 @DPATCH@
 
 diff -Naur pacman4console-1.2.orig/Makefile pacman4console-1.2/Makefile
---- pacman4console-1.2.orig/Makefile	2007-01-03 10:36:25.000000000 -0200
-+++ pacman4console-1.2/Makefile	2007-01-03 11:01:51.000000000 -0200
-@@ -3,15 +3,13 @@
+--- pacman4console-1.2.orig/Makefile	2006-12-14 02:52:19.000000000 -0200
++++ pacman4console-1.2/Makefile	2007-05-30 16:19:17.000000000 -0300
+@@ -3,24 +3,18 @@
  	gcc -lncurses pacmanedit.c -o pacmanedit
  
  install:	all
@@ -32,4 +31,16 @@ diff -Naur pacman4console-1.2.orig/Makefile pacman4console-1.2/Makefile
 +	chown root:games $(DESTDIR)/usr/share/pacman4console -R
  
  uninstall:
- 	rm -f /usr/local/bin/pacman
+-	rm -f /usr/local/bin/pacman
+-	rm -f /usr/local/bin/pacmanedit
+-	rm -f /usr/local/share/pacman/Levels/level0[1-9].dat
+-	rm -f /usr/local/share/pacman/Levels/README
+-	rm -f /usr/local/share/pacman/Levels/template.dat
+-	if [ -e /usr/local/share/pacman/Levels/ ] ; then rmdir /usr/local/share/pacman/Levels/ ; fi
+-	if [ -e /usr/local/share/pacman/ ] ; then rmdir /usr/local/share/pacman/ ; fi
++	rm -f $(DESTDIR)/usr/games/pacman4console
++	rm -f $(DESTDIR)/usr/bin/pacman4consoleedit
++	rm -rf $(DESTDIR)/usr/share/pacman4console
+ 
+ clean:	uninstall
+ 	rm -f pacman
