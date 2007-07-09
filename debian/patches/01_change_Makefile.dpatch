@@ -2,7 +2,7 @@
 ## 01_change_Makefile.dpatch by Joao Eriberto Mota Filho <eriberto@eriberto.pro.br>
 ##
 ## All lines beginning with `## DP:' are a description of the patch.
-## DP: No description.
+## DP: Make Makefile compliant with FHS.
 
 @DPATCH@
 diff -urNad pacman4console-1.2~/Makefile pacman4console-1.2/Makefile
