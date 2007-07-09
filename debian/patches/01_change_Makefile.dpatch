@@ -1,18 +1,18 @@
 #! /bin/sh /usr/share/dpatch/dpatch-run
-## Change Makefile.dpatch by Joao Eriberto Mota Filho <eriberto@eriberto.pro.br>
+## 01_change_Makefile.dpatch by Joao Eriberto Mota Filho <eriberto@eriberto.pro.br>
 ##
 ## All lines beginning with `## DP:' are a description of the patch.
-## DP: Makefile compliant with Debian
+## DP: No description.
 
 @DPATCH@
-
-diff -Naur pacman4console-1.2.orig/Makefile pacman4console-1.2/Makefile
---- pacman4console-1.2.orig/Makefile	2006-12-14 02:52:19.000000000 -0200
-+++ pacman4console-1.2/Makefile	2007-05-30 16:19:17.000000000 -0300
-@@ -3,24 +3,18 @@
+diff -urNad pacman4console-1.2~/Makefile pacman4console-1.2/Makefile
+--- pacman4console-1.2~/Makefile	2007-07-09 01:05:30.000000000 -0300
++++ pacman4console-1.2/Makefile	2007-07-09 01:11:33.000000000 -0300
+@@ -2,16 +2,15 @@
+ 	gcc -lncurses pacman.c     -o pacman
  	gcc -lncurses pacmanedit.c -o pacmanedit
  
- install:	all
+-install:	all
 -	cp pacman /usr/local/bin
 -	cp pacmanedit /usr/local/bin
 -	mkdir -p /usr/local/share/pacman
@@ -22,25 +22,15 @@ diff -Naur pacman4console-1.2.orig/Makefile pacman4console-1.2/Makefile
 -	chmod 750 /usr/local/bin/pacman
 -	chmod 750 /usr/local/bin/pacmanedit
 -	chmod 750 /usr/local/share/pacman/ -R
++install:
 +	cp pacman $(DESTDIR)/usr/games/pacman4console
 +	cp pacmanedit $(DESTDIR)/usr/bin/pacman4consoleedit
 +	mkdir -p $(DESTDIR)/usr/share/pacman4console
-+	cp -fR Levels/*.dat $(DESTDIR)/usr/share/pacman4console/Levels
++	cp -fR Levels/ $(DESTDIR)/usr/share/pacman4console/
 +	chown root:games $(DESTDIR)/usr/games/pacman4console
-+	chown root:games $(DESTDIR)/usr/bin/pacman4consoleedit
 +	chown root:games $(DESTDIR)/usr/share/pacman4console -R
++	chmod 755 $(DESTDIR)/usr/games/pacman4console
++	chmod 755 $(DESTDIR)/usr/bin/pacman4consoleedit
  
  uninstall:
--	rm -f /usr/local/bin/pacman
--	rm -f /usr/local/bin/pacmanedit
--	rm -f /usr/local/share/pacman/Levels/level0[1-9].dat
--	rm -f /usr/local/share/pacman/Levels/README
--	rm -f /usr/local/share/pacman/Levels/template.dat
--	if [ -e /usr/local/share/pacman/Levels/ ] ; then rmdir /usr/local/share/pacman/Levels/ ; fi
--	if [ -e /usr/local/share/pacman/ ] ; then rmdir /usr/local/share/pacman/ ; fi
-+	rm -f $(DESTDIR)/usr/games/pacman4console
-+	rm -f $(DESTDIR)/usr/bin/pacman4consoleedit
-+	rm -rf $(DESTDIR)/usr/share/pacman4console
- 
- clean:	uninstall
- 	rm -f pacman
+ 	rm -f /usr/local/bin/pacman

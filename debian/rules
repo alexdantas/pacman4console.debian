@@ -1,17 +1,9 @@
 #!/usr/bin/make -f
-# -*- makefile -*-
-# This file was originally written by Joey Hess and Craig Small.
-# As a special exception, when this file is copied by dh-make into a
-# dh-make output file, you may use that output file without restriction.
-# This special exception was added by Craig Small in version 0.37 of dh-make.
 
 # Uncomment this to turn on verbose mode.
 #export DH_VERBOSE=1
 
 include /usr/share/dpatch/dpatch.make
-
-configure: configure-stamp
-configure-stamp:
 
 build: build-stamp
 
@@ -24,7 +16,7 @@ clean: unpatch
 	dh_testdir
 	dh_testroot
 	rm -f build-stamp
-	-$(MAKE) clean
+	$(MAKE) clean
 	dh_clean 
 
 install: build
@@ -33,8 +25,7 @@ install: build
 	dh_clean -k 
 	dh_installdirs
 	$(MAKE) DESTDIR=$(CURDIR)/debian/pacman4console install
-	cp $(CURDIR)/Levels/README $(CURDIR)/debian/pacman4console/usr/share/doc/pacman4console/README.Levels
-
+	mv $(CURDIR)/debian/pacman4console/usr/share/pacman4console/Levels/README $(CURDIR)/debian/pacman4console/usr/share/doc/pacman4console/README.Levels
 
 binary-indep: build install
 
@@ -44,7 +35,6 @@ binary-arch: build install
 	dh_installchangelogs ChangeLog
 	dh_installdocs
 	dh_installman $(CURDIR)/debian/pacman4console.6 $(CURDIR)/debian/pacman4consoleedit.1
-	dh_link
 	dh_strip
 	dh_compress
 	dh_fixperms

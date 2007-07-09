@@ -1,3 +1,11 @@
+pacman4console (1.2-2) unstable; urgency=low
+
+  * Cleaned debian/rules file.
+  * Changed Makefile patch to fix .dat permissions.
+  * Removed README file from /usr/share/pacman4console/Levels.
+
+ -- Joao Eriberto Mota Filho <eriberto@eriberto.pro.br>  Mon, 09 Jul 2007 00:00:15 -0300
+
 pacman4console (1.2-1) unstable; urgency=low
 
   * Initial release (Closes: #402287)
