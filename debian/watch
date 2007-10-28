@@ -1,2 +1,2 @@
 version=3
-http://doctormike.googlepages.com/pacman-(.*)\.tar\.gz
+http://doctormike.googlepages.com/pacman.html pacman-(.*)\.tar\.gz
