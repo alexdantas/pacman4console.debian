@@ -1,19 +1,14 @@
-pacman4console (1.2-3) unstable; urgency=low
-
-  * Fixed debian/watch file to check GooglePages correctly.
-  * Added Homepage and XS-Vcs-Browser fields in debian/control.
-  * Changed XS-X-Vcs-Svn to XS-Vcs-Svn in debian/control.
-  * Changed Priority field from "extra" to "optional" in debian/control.
-
- -- Joao Eriberto Mota Filho <eriberto@eriberto.pro.br>  Sat, 27 Oct 2007 22:33:47 -0200
-
-pacman4console (1.2-2) UNRELEASED; urgency=low
+pacman4console (1.2-2) unstable; urgency=low
 
   * Cleaned debian/rules file.
-  * Changed Makefile patch to fix .dat permissions (from 750 to 644).
-  * Removed README file from /usr/share/pacman4console/Levels.
+  * Changed Makefile patch to fix .dat permissions.
+  * Moved README file from /usr/share/pacman4console/Levels to
+    /usr/share/doc/pacman4console.
+  * Added the screenshot.png file to debian/docs.
+  * Fixed the debian/watch sintax to access GooglePages site.
+  * Added "screenshot" to long description.
 
- -- Joao Eriberto Mota Filho <eriberto@eriberto.pro.br>  Mon, 09 Jul 2007 00:00:15 -0300
+ -- Joao Eriberto Mota Filho <eriberto@eriberto.pro.br>  Mon, 11 Nov 2007 16:48:15 -0200
 
 pacman4console (1.2-1) unstable; urgency=low
 
