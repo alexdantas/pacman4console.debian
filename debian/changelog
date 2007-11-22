@@ -5,7 +5,7 @@ pacman4console (1.2-2) unstable; urgency=low
   * Moved README file from /usr/share/pacman4console/Levels to
     /usr/share/doc/pacman4console.
   * Added the screenshot.png file to debian/docs.
-  * Fixed the debian/watch sintax to access GooglePages site.
+  * Fixed the debian/watch sintax to access GooglePages site (Closes: #450247).
   * Added "screenshot" to long description.
 
  -- Joao Eriberto Mota Filho <eriberto@eriberto.pro.br>  Mon, 11 Nov 2007 16:48:15 -0200
