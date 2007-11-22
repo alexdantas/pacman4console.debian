@@ -5,7 +5,7 @@ Maintainer: Joao Eriberto Mota Filho <eriberto@eriberto.pro.br>
 Build-Depends: debhelper (>= 5), libncurses5-dev, dpatch
 Standards-Version: 3.7.2
 Vcs-Svn: svn://svn.debian.org/svn/debian-br-team/unstable/pacman4console
-Vcs-Browser: svn://svn.debian.org/wsvn/debian-br-team/unstable/pacman4console
+Vcs-Browser: http://svn.debian.org/wsvn/debian-br-team/unstable/pacman4console
 Homepage: http://freshmeat.net/projects/pacmanforconsole
 
 Package: pacman4console
