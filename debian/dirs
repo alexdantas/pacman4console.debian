@@ -1,4 +1,5 @@
 usr/bin
 usr/games
 usr/share/doc/pacman4console
+usr/share/lintian/overrides
 usr/share/pacman4console/Levels

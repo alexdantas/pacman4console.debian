@@ -26,8 +26,7 @@ install: build
 	dh_installdirs
 	$(MAKE) DESTDIR=$(CURDIR)/debian/pacman4console install
 	mv $(CURDIR)/debian/pacman4console/usr/share/pacman4console/Levels/README $(CURDIR)/debian/pacman4console/usr/share/doc/pacman4console/README.Levels
-
-binary-indep: build install
+	cp debian/override $(CURDIR)/debian/pacman4console/usr/share/lintian/overrides/pacman4console
 
 binary-arch: build install
 	dh_testdir
@@ -44,5 +43,5 @@ binary-arch: build install
 	dh_md5sums
 	dh_builddeb
 
-binary: binary-indep binary-arch
+binary: binary-arch
 .PHONY: build clean binary-indep binary-arch binary install configure
