@@ -2,16 +2,16 @@ Source: pacman4console
 Section: games
 Priority: extra
 Maintainer: Joao Eriberto Mota Filho <eriberto@eriberto.pro.br>
-Build-Depends: debhelper (>= 5), libncurses5-dev, dpatch
-Standards-Version: 3.7.3
-Vcs-Svn: svn://svn.debian.org/svn/debian-br-team/unstable/pacman4console
-Vcs-Browser: http://svn.debian.org/wsvn/debian-br-team/unstable/pacman4console
-Homepage: http://doctormike.googlepages.com/pacman.html
+Build-Depends: debhelper (>= 9), dpkg-dev (>= 1.16.1~), libncurses5-dev
+Standards-Version: 3.9.4
+Vcs-Browser: http://anonscm.debian.org/viewvc/debian-br-team/packages/pacman4console
+Vcs-Svn: svn://svn.debian.org/svn/debian-br-team/packages/pacman4console
+Homepage: https://sites.google.com/site/doctormike/pacman.html
 
 Package: pacman4console
 Architecture: any
-Depends: ${shlibs:Depends}
-Description: a console based pacman game 
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: console based pacman game
  This is a simple but very good pacman game. Also, its source code is very
  simple and well commented so it may be a good reference for learning ncurses
  and C programming.
