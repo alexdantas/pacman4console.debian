@@ -1,2 +1,4 @@
+fix_array_index.patch
+pacman.c.patch
 levels.patch
 Makefile.patch

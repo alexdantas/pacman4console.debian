@@ -3,12 +3,12 @@ Author: Joao Eriberto Mota Filho <eriberto@eriberto.pro.br>
 Last-Update: 20130506
 --- a/Makefile
 +++ b/Makefile
-@@ -1,17 +1,12 @@
+@@ -1,17 +1,13 @@
  all:
 -	gcc -lncurses pacman.c     -o pacman
 -	gcc -lncurses pacmanedit.c -o pacmanedit
-+	gcc $(CPPFLAGS) $(CFLAGS) $(LDFLAGS) -lncurses pacman.c     -o pacman
-+	gcc $(CPPFLAGS) $(CFLAGS) $(LDFLAGS) -lncurses pacmanedit.c -o pacmanedit
++	gcc pacman.c     -o pacman     $(CPPFLAGS) $(CFLAGS) $(LDFLAGS) -lncurses
++	gcc pacmanedit.c -o pacmanedit $(CPPFLAGS) $(CFLAGS) $(LDFLAGS) -lncurses
  
  install:	all
 -	cp pacman /usr/local/bin
@@ -23,7 +23,8 @@ Last-Update: 20130506
 +	install -D pacman $(DESTDIR)/usr/games/pacman4console
 +	install -D pacmanedit $(DESTDIR)/usr/bin/pacman4consoleedit
 +	install -d $(DESTDIR)/usr/share/pacman4console/Levels
-+	install -m 644 Levels/* $(DESTDIR)/usr/share/pacman4console/Levels/
++	install -m 644 Levels/*dat $(DESTDIR)/usr/share/pacman4console/Levels/
++	install -D -m 644 Levels/README $(DESTDIR)/usr/share/doc/pacman4console/README.editor
  
  uninstall:
  	rm -f /usr/local/bin/pacman

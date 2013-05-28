@@ -1,24 +1,36 @@
 pacman4console (1.2-3) unstable; urgency=low
 
   * Migrations:
-      - debian format from 1.0 to 3.0.
+      - debian format from 1.0 to 3.0. (Closes: #661027)
       - debian/changelog to 1.0.
       - debhelper level from 5 to 9.
       - patch system from dpatch to quilt.
+      - VCS: svn to git.
   * debian/control:
       - added dpkg-dev as Build-Depends.
       - added ${misc:Depends} to Depends field.
       - droped leading article from short description.
+      - removed screeshot reference from long description.
       - updated Standards-Version from 3.7.3 to 3.9.4.
-      - updated VCS fields.
       - updated homepage.
   * debian/dirs: removed. Using Makefile only.
+  * debian/manpages: created to install manuals.
   * debian/override: renamed to lintian-overrides.
-  * debian/patches/Makefile.patch:
-      - added GCC hardening.
-      - switched several commands by "install" to simplify actions.
+  * debian/patches/
+      - fix_array_index.patch: Fix array index out of bounds if pacman or
+            ghost is going through one border to the opposite site. Thanks
+            to Yannic Scheper. (Closes: #641657)
+      - Makefile.patch:
+          . added GCC hardening.
+          . adjusted lncurses position to avoid FTBFS when using --as-needed.
+            Thanks to Alex Chiang. (Closes: #641384)
+          . switched several commands by "install" to simplify actions.
+      - pacman.c.patch: fix possible buffer overflow when using an argument
+            larger than 99 characters to start the program. Thanks to Yannic
+            Scheper. (Closes: #641652)
   * debian/rules: updated to new (reduced) format.
-  * debian/watch: silenced.
+  * debian/watch: removed because the current page doesn't allow watch. Made
+      an overide for this situation.
   * manpages: fixed little mistakes.
 
  -- Joao Eriberto Mota Filho <eriberto@eriberto.pro.br>  Tue, 30 Apr 2013 21:55:50 -0300

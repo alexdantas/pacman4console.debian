@@ -1,0 +1,14 @@
+Description: fix possible buffer overflow when using an argument
+             larger than 99 characters to start the program.
+Author: Yannic Scheper <ys42@cd42.de>
+Last-Update: 20110914
+--- a/pacman.c
++++ b/pacman.c
+@@ -59,6 +59,7 @@
+ 
+ 	//If they specified a level to load
+ 	if((argc > 1) && (strlen(argv[1]) > 1)) {
++		argv[1][99] = '\0';
+ 		LoadLevel(argv[1]);
+ 		MainLoop();
+ 	}
