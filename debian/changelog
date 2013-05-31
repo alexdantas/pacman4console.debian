@@ -14,6 +14,7 @@ pacman4console (1.2-3) unstable; urgency=low
       - updated Standards-Version from 3.7.3 to 3.9.4.
       - updated homepage.
   * debian/dirs: removed. Using Makefile only.
+  * debian/gbp.conf: added to allow git-buildpackage use.
   * debian/manpages: created to install manuals.
   * debian/override: renamed to lintian-overrides.
   * debian/patches/
