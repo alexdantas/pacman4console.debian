@@ -3,7 +3,7 @@ Upstream-Name: pacman
 Source: https://sites.google.com/site/doctormike/pacman.html
 
 Files: *
-Copyright: 2006 Michael Billars
+Copyright: 2006 Michael Billars <doctormike@gmail.com>
 License: GPL-2.0+
 
 Files: debian/*

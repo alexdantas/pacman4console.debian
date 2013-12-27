@@ -1,0 +1,2 @@
+# The upstream didn't provide a PGP/GPG signature.
+pacman4console source: debian-watch-may-check-gpg-signature
