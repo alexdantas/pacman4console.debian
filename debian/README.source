@@ -1,0 +1,12 @@
+pacman4console for Debian
+-------------------------
+
+The upstream stopped the development of this game at 2006. Then, to implement
+a menu entry (#737997), Yannic Scheper <ys42@cd42.de> made a patch to allow an
+'exit' or a 'restart' after the "game over" message, avoiding an abort to shell
+from the program.
+
+Special thanks to Yannic Scheper that replied me quickly and made all necessary
+changes, creating the patch in some minutes.
+
+  -- Joao Eriberto Mota Filho <eriberto@eriberto.pro.br>  Mon, 10 Feb 2014 19:38:22 -0200

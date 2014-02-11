@@ -1,2 +1,2 @@
 version=3
-https://sites.google.com/site/doctormike/pacman.html .*/pacman-(\d\S*)\.tar\.gz.*
+https://sites.google.com/site/doctormike/pacman.html .*/pacman-(\d\S+)\.tar\.(?:bz2|gz|xz).*

@@ -1,3 +1,33 @@
+pacman4console (1.2-6) unstable; urgency=medium
+
+  * Added a desktop entry. Thanks to Markus Koschany <apo@gambaru.de>
+    for the suggestion. So, created debian/{desktop/pacman4cosole,menu,
+    pacman4console.xpm}. (Closes: #737997)
+  * manpages:
+      - debian/man/: created to group all manpages and their sources.
+      - pacman4console.1: moved to debian/man/ and updated.
+      - pacman4consoleedit.1: moved to debian/man/.
+  * debian/copyright: updated the packaging copyright years.
+  * debian/install: added to install desktop and pacman4console.xpm files.
+  * debian/patches:
+      - Added a new patch (pacman.c) that allows exit or restart after
+        "game over" message. This was fundamental to add a desktop entry.
+        This patch gather the old 'fix_array_index' and 'pacman.c' patches.
+        This patch also provides new features to pacman4console. To see more
+        details, read the debian/patches/pacman.c from Debian source code.
+        Special thanks to Yannic Scheper <ys42@cd42.de> that replied me
+        quickly and made all necessary changes, creating a patch in some
+        minutes, once the upstream stopped the development.
+      - fix_array_index: deleted because the pacman.c provides the same
+        function.
+      - Removed the .patch extension from all patches.
+  * debian/README.source: added to explain about new patch.
+  * debian/source/lintian-overrides: removed as requested by Paul Wise.
+    Thanks to Paul for explanations about the idea of the GPG sign check.
+  * debian/watch: improved.
+
+ -- Joao Eriberto Mota Filho <eriberto@eriberto.pro.br>  Sun, 09 Feb 2014 13:11:09 -0200
+
 pacman4console (1.2-5) unstable; urgency=medium
 
   * Bumped Standards-Version from 3.9.4 to 3.9.5.
