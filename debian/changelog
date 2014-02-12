@@ -1,3 +1,26 @@
+pacman4console (1.2-7) unstable; urgency=medium
+
+  * debian/desktop/pacman4console: renamed to pacman4console.desktop.
+    Thanks to Markus Koschany <apo@gambaru.de>. (Closes: #738709)
+  * debian/docs: removed because the screenshot.png file is useless
+    and the upstream README is a bit deprecated.
+  * debian/install: updated because a file was renamed and another
+    was moved to debian/desktop/.
+  * debian/man/:
+      - Removed the useless file pacman4console.6.old.
+      - Updated and improved the pacman4consoleeditor.1.
+  * debian/pacman4console.xpm: moved to debian/desktop directory.
+  * debian/patches/Makefile: updated to avoid the upstream
+    Levels/README install, because the pacman4consoleeditor.1 now has
+    this information.
+  * debian/README.Debian: added to gather essential information from
+    upstream README.
+  * debian/rules: removed useless lines 'DPKG_EXPORT_BUILDFLAGS' and
+    'include /usr/share/dpkg/buildflags.mk'. Using DH9 turns these
+    lines obsoletes.
+
+ -- Joao Eriberto Mota Filho <eriberto@eriberto.pro.br>  Wed, 12 Feb 2014 09:57:18 -0200
+
 pacman4console (1.2-6) unstable; urgency=medium
 
   * Added a desktop entry. Thanks to Markus Koschany <apo@gambaru.de>

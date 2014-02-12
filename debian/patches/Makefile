@@ -1,9 +1,9 @@
 Description: makes Makefile compliant with Debian and adds GCC hardening.
 Author: Joao Eriberto Mota Filho <eriberto@eriberto.pro.br>
-Last-Update: 20130506
+Last-Update: 2014-02-12
 --- a/Makefile
 +++ b/Makefile
-@@ -1,17 +1,13 @@
+@@ -1,17 +1,12 @@
  all:
 -	gcc -lncurses pacman.c     -o pacman
 -	gcc -lncurses pacmanedit.c -o pacmanedit
@@ -24,7 +24,6 @@ Last-Update: 20130506
 +	install -D pacmanedit $(DESTDIR)/usr/bin/pacman4consoleedit
 +	install -d $(DESTDIR)/usr/share/pacman4console/Levels
 +	install -m 644 Levels/*dat $(DESTDIR)/usr/share/pacman4console/Levels/
-+	install -D -m 644 Levels/README $(DESTDIR)/usr/share/doc/pacman4console/README.editor
  
  uninstall:
  	rm -f /usr/local/bin/pacman

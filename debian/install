@@ -1,2 +1,2 @@
-debian/pacman4console.xpm 	usr/share/pixmaps
-debian/desktop/pacman4console	usr/share/applications
+debian/desktop/pacman4console.xpm	usr/share/pixmaps
+debian/desktop/pacman4console.desktop	usr/share/applications
