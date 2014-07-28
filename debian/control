@@ -1,7 +1,7 @@
 Source: pacman4console
 Section: games
 Priority: optional
-Maintainer: Joao Eriberto Mota Filho <eriberto@eriberto.pro.br>
+Maintainer: Debian QA Group <packages@qa.debian.org>
 Build-Depends: debhelper (>= 9), dpkg-dev (>= 1.16.1~), libncurses5-dev
 Standards-Version: 3.9.5
 Vcs-Browser: http://anonscm.debian.org/gitweb/?p=collab-maint/pacman4console.git

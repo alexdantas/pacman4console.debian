@@ -1,3 +1,10 @@
+pacman4console (1.2-8) unstable; urgency=medium
+
+  * Orphaned (see #756024).
+  * Changed maintainer to Debian QA Group <packages@qa.debian.org>.
+
+ -- Joao Eriberto Mota Filho <eriberto@eriberto.pro.br>  Fri, 25 Jul 2014 11:24:01 -0300
+
 pacman4console (1.2-7) unstable; urgency=medium
 
   * debian/desktop/pacman4console: renamed to pacman4console.desktop.
