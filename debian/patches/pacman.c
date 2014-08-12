@@ -13,152 +13,156 @@ Description: fix some problems and add features.
                    * Changed option syntax for level choosing.
 Author: Yannic Scheper <ys42@cd42.de>
 Last-Update: 2014-02-10
---- a/pacman.c
-+++ b/pacman.c
-@@ -16,19 +16,21 @@
- #include "pacman.h"
- 
+--- pacman4console.orig/pacman.c
++++ pacman4console/pacman.c
+@@ -31,7 +31,7 @@
+ * PROTOTYPES *
+ *************/
  void IntroScreen();                                     //Show introduction screen and menu
 -void CheckCollision();                                  //See if Pacman and Ghosts collided
-+int CheckCollision();                                   //See if Pacman and Ghosts collided
++int  CheckCollision();                                  //See if Pacman and Ghosts collided
  void CheckScreenSize();                                 //Make sure resolution is at least 32x29
  void CreateWindows(int y, int x, int y0, int x0);       //Make ncurses windows
  void Delay();                                           //Slow down game for better control
- void DrawWindow();                                      //Refresh display
- void ExitProgram(char message[255]);                    //Exit and display something
+@@ -40,11 +40,11 @@ void ExitProgram(const char *message);
  void GetInput();                                        //Get user input
-+int GameOverScreen();                                   //Show 'Game Over' screen
  void InitCurses();                                      //Start up ncurses
- void LoadLevel(char levelfile[100]);                    //Load level into memory
+ void LoadLevel(char *levelfile);                        //Load level into memory
 -void MainLoop();                                        //Main program function
-+int MainLoop();                                         //Main program function
++int  MainLoop();                                        //Main program function
  void MoveGhosts();                                      //Update Ghosts' location
  void MovePacman();                                      //Update Pacman's location
  void PauseGame();                                       //Pause
+-
 +void PrintHelp(char* name);                             //Print help and exit
  
- //For ncurses
- WINDOW * win;
-@@ -50,45 +52,76 @@
- 
+ /*******************
+ * GLOBAL VARIABLES *
+@@ -76,41 +76,71 @@ int tleft = 0;
+ ****************************************************************/
  int main(int argc, char *argv[100]) {
  
--	int j = 0;
-+	int loop = 1;       //loop program? 0 = no, 1 = yes
-+	char* level = NULL; //level to load
-+	int j = 1;
-+	int i;
-+	for(i = 1; i < argc; ++i) {
-+		if(strcmp(argv[i], "--help") == 0 || strcmp(argv[i], "-h") == 0) {
-+			PrintHelp(argv[0]);
-+			return 0;
-+		}
-+		else if(strncmp(argv[i], "--level=", 8) == 0) {
-+			level = argv[i];
-+			level += 8;
-+			int len = strlen(level);
-+			if(len == 0) {
-+				level = NULL;
-+			}
-+			else if(len == 1) {
-+				for(LevelNumber = '1'; LevelNumber <= '9'; LevelNumber++) {
-+					if(LevelNumber == level[0]) {
-+						j = LevelNumber - '0';
-+						level = NULL;
-+						break;
-+					}
-+				}
-+			}
-+		}
-+		else {
-+			PrintHelp(argv[0]);
-+			return 0;
-+		}
-+	}
+-    int j = 0;
++    int loop = 1;       //loop program? 0 = no, 1 = yes
++    char* level = NULL; //level to load
++    int j = 1;
++    int i;
++    for(i = 1; i < argc; ++i) {
++        if(strcmp(argv[i], "--help") == 0 || strcmp(argv[i], "-h") == 0) {
++            PrintHelp(argv[0]);
++            return 0;
++        }
++        else if(strncmp(argv[i], "--level=", 8) == 0) {
++            level = argv[i];
++            level += 8;
++            int len = strlen(level);
++            if(len == 0) {
++                level = NULL;
++            }
++            else if(len == 1) {
++                for(LevelNumber = '1'; LevelNumber <= '9'; LevelNumber++) {
++                    if(LevelNumber == level[0]) {
++                        j = LevelNumber - '0';
++                        level = NULL;
++                        break;
++                    }
++                }
++            }
++        }
++        else {
++            PrintHelp(argv[0]);
++            return 0;
++        }
++    }
 +
- 	srand( (unsigned)time( NULL ) );
+     srand( (unsigned)time( NULL ) );
  
- 	InitCurses();
- 	CheckScreenSize();
- 	CreateWindows(29, 28, 1, 1);
+     InitCurses();                   //Must be called to start ncurses
+     CheckScreenSize();              //Make sure screen is big enough
+     CreateWindows(29, 28, 1, 1);    //Create the main and status windows
  
--	//If they specified a level to load
--	if((argc > 1) && (strlen(argv[1]) > 1)) {
--		LoadLevel(argv[1]);
--		MainLoop();
--	}
--        
--	//If not, display intro screen then use default levels
--	else {
--		//Show intro "movie"
--		IntroScreen();
-+	//Show intro "movie"
-+	IntroScreen();
- 
--		j = 1;
--		//They want to start at a level 1-9
--		if(argc > 1)
--			for(LevelNumber = '1'; LevelNumber <= '9'; LevelNumber++)
--				if(LevelNumber == argv[1][0]) j = LevelNumber - '0';
+-    //If they specified a level to load
+-    if((argc > 1) && (strlen(argv[1]) > 1)) {
+-        argv[1][99] = '\0';
+-        LoadLevel(argv[1]);         //Load it and...
+-        MainLoop();                 //Start the game
+-    }
 -
--		//Load 9 levels, 1 by 1, if you can beat all 9 levels in a row, you're awesome
--		for(LevelNumber = j; LevelNumber < 10; LevelNumber++) {
--                        LevelFile[strlen(LevelFile) - 6] = '0';
--			LevelFile[strlen(LevelFile) - 5] = LevelNumber + '0';
--			LoadLevel(LevelFile);
-+	int start_lives = Lives;
-+	int start_points = Points;
-+	do {
-+		Lives = start_lives;
-+		Points = start_points;
-+		if(level == NULL) {
-+			//j = 1;
-+			//Load levels, 1 by 1, if you can beat all 9 levels in a row, you're awesome
-+			for(LevelNumber = j; LevelNumber < 10; LevelNumber++) {
+-    //If they did not enter a level, display intro screen then use default levels
+-    else {
+-        IntroScreen();              //Show intro "movie"
+-        j = 1;                      //Set initial level to 1
+-
+-        if(argc > 1) j = argv[1][0] - '0';    //They specified a level on which to start (1-9)
+-
+-        //Load 9 levels, 1 by 1, if you can beat all 9 levels in a row, you're awesome
+-        for(LevelNumber = j; LevelNumber < 10; LevelNumber++) {
+-
+-            //Replace level string underscore with the actual level number (see pacman.h)
+-            LevelFile[strlen(LevelFile) - 6] = '0';
+-            LevelFile[strlen(LevelFile) - 5] = LevelNumber + '0';
+-
+-            LoadLevel(LevelFile);   //Load level into memory
+-            Invincible = 0;         //Reset invincibility with each new level
+-            MainLoop();             //Start the level
++    IntroScreen();              //Show intro "movie"
+ 
++    int start_lives = Lives;
++    int start_points = Points;
++    do {
++        Lives = start_lives;
++        Points = start_points;
++        if(level == NULL) {
++            //j = 1;
++            //Load levels, 1 by 1, if you can beat all 9 levels in a row, you're awesome
++            for(LevelNumber = j; LevelNumber < 10; LevelNumber++) {
 +                            LevelFile[strlen(LevelFile) - 6] = '0';
-+				LevelFile[strlen(LevelFile) - 5] = LevelNumber + '0';
-+				LoadLevel(LevelFile);
-+				Invincible = 0;			//Reset invincibility
-+				if(MainLoop() == 1) break;
-+			}
-+		}
-+		else {
-+			//Load special non-standard level
-+			LoadLevel(level);
- 			Invincible = 0;			//Reset invincibility
- 			MainLoop();
- 		}
--
--	}
-+		if(GameOverScreen() == 1) loop = 0;
-+	} while(loop == 1);
++                LevelFile[strlen(LevelFile) - 5] = LevelNumber + '0';
++                LoadLevel(LevelFile);
++                Invincible = 0;            //Reset invincibility
++                if(MainLoop() == 1) break;
++            }
+         }
++        else {
++            //Load special non-standard level
++            LoadLevel(level);
++             Invincible = 0;            //Reset invincibility
++             MainLoop();
++         }
  
- 	ExitProgram("Good bye!");
- }
+-    }
++        if(GameOverScreen() == 1) loop = 0;
++    } while(loop == 1);
  
+     //Game has ended, deactivate and end program
+     ExitProgram(EXIT_MSG);
+@@ -125,7 +155,7 @@ int main(int argc, char *argv[100]) {
+ * Returns:     none                                             *
+ * Description: Check and handle if Pacman collided with a ghost *
+ ****************************************************************/
 -void CheckCollision() {
 +int CheckCollision() {
- 	int a = 0;
- 	for(a = 0; a < 4; a++) {
- 		//Collision
-@@ -116,7 +149,7 @@
- 				Lives--;
- 				usleep(1000000);
  
--				if(Lives == -1) ExitProgram("Game Over");
-+				if(Lives == -1) return 1;
+     //Temporary variable
+     int a = 0;
+@@ -165,7 +195,7 @@ void CheckCollision() {
+                 usleep(1000000);
  
- 				//Reset level
- 				for(a = 0; a < 5; a++) {
-@@ -135,6 +168,7 @@
- 			}
- 		}
- 	}
-+	return 0;
+                 //If no more lives, game over
+-                if(Lives == -1) ExitProgram(END_MSG);
++                if(Lives == -1) return 1;
+ 
+                 //If NOT game over...
+ 
+@@ -187,6 +217,7 @@ void CheckCollision() {
+             }
+         }
+     }
++    return 0;
  }
  
- void CheckScreenSize() {
-@@ -143,7 +177,7 @@
+ /****************************************************************
+@@ -203,13 +234,41 @@ void CheckScreenSize() {
          if((h < 32) || (w < 29)) {
                  endwin();
                  fprintf(stderr, "\nSorry.\n");
@@ -167,173 +171,87 @@ Last-Update: 2014-02-10
                  fprintf(stderr, "Please resize your window/resolution and re-run the game.\n\n");
                  exit(0);
          }
-@@ -223,6 +257,34 @@
- 	exit(0);
+ 
  }
  
 +int GameOverScreen() {
-+	char chr = ' ';
-+	int a, b;
-+	for(a = 0; a < 29; a++) for(b = 0; b < 28; b++) {
-+		mvwaddch(win, a, b, chr);
-+	}
++    char chr = ' ';
++    int a, b;
++    for(a = 0; a < 29; a++) for(b = 0; b < 28; b++) {
++        mvwaddch(win, a, b, chr);
++    }
 +
-+	wattron(win, COLOR_PAIR(Pacman));
-+	mvwprintw(win, 8, 11, "Game Over");
++    wattron(win, COLOR_PAIR(Pacman));
++    mvwprintw(win, 8, 11, "Game Over");
 +
-+	wattron(win, COLOR_PAIR(Normal));
-+	mvwprintw(win, 14, 2, "Press q to quit ...");
-+	mvwprintw(win, 16, 2, "... or any other key");
-+	mvwprintw(win, 17, 6, "to play again");
++    wattron(win, COLOR_PAIR(Normal));
++    mvwprintw(win, 14, 2, "Press q to quit ...");
++    mvwprintw(win, 16, 2, "... or any other key");
++    mvwprintw(win, 17, 6, "to play again");
 +
-+	wrefresh(win);
++    wrefresh(win);
 +
-+	//And wait
-+	int chtmp;
-+	do {
-+		chtmp = getch();
-+	} while (chtmp == ERR);
++    //And wait
++    int chtmp;
++    do {
++        chtmp = getch();
++    } while (chtmp == ERR);
 +
-+	if(chtmp == 'q' || chtmp == 'Q')
-+		return 1;
-+	return 0;
++    if(chtmp == 'q' || chtmp == 'Q')
++        return 1;
++    return 0;
 +}
 +
- void GetInput() {
- 	int ch;
- 	static int chtmp;
-@@ -233,28 +295,37 @@
- 	if(ch == ERR) ch = chtmp;
- 	chtmp = ch;
- 
-+	int tmp;
- 	switch (ch) {
- 		case KEY_UP:    case 'w': case 'W':
--			if((Level[Loc[4][0] - 1][Loc[4][1]] != 1)
--			&& (Level[Loc[4][0] - 1][Loc[4][1]] != 4))
-+			if(Loc[4][0] == 0) tmp = 28;
-+			else tmp = Loc[4][0] - 1;
-+			if((Level[tmp][Loc[4][1]] != 1)
-+			&& (Level[tmp][Loc[4][1]] != 4))
- 				{ Dir[4][0] = -1; Dir[4][1] =  0; }
- 			break;
- 
- 		case KEY_DOWN:  case 's': case 'S':
--			if((Level[Loc[4][0] + 1][Loc[4][1]] != 1)
--			&& (Level[Loc[4][0] + 1][Loc[4][1]] != 4))
-+			if(Loc[4][0] == 28) tmp = 0;
-+			else tmp = Loc[4][0] + 1;
-+			if((Level[tmp][Loc[4][1]] != 1)
-+			&& (Level[tmp][Loc[4][1]] != 4))
- 				{ Dir[4][0] =  1; Dir[4][1] =  0; }
- 			break;
- 
- 		case KEY_LEFT:  case 'a': case 'A':
--			if((Level[Loc[4][0]][Loc[4][1] - 1] != 1)
--			&& (Level[Loc[4][0]][Loc[4][1] - 1] != 4))
-+			if(Loc[4][1] == 0) tmp = 27;
-+			else tmp = Loc[4][1] - 1;
-+			if((Level[Loc[4][0]][tmp] != 1)
-+			&& (Level[Loc[4][0]][tmp] != 4))
- 				{ Dir[4][0] =  0; Dir[4][1] = -1; }
- 			break;
- 
- 		case KEY_RIGHT: case 'd': case 'D':
--			if((Level[Loc[4][0]][Loc[4][1] + 1] != 1)
--			&& (Level[Loc[4][0]][Loc[4][1] + 1] != 4))
-+			if(Loc[4][1] == 27) tmp = 0;
-+			else tmp = Loc[4][1] + 1;
-+			if((Level[Loc[4][0]][tmp] != 1)
-+			&& (Level[Loc[4][0]][tmp] != 4))
- 				{ Dir[4][0] =  0; Dir[4][1] =  1; }
- 			break;
- 
-@@ -355,7 +426,7 @@
- 
- }
- 
+ /****************************************************************
+ * Function:    CreateWindows()                                  *
+ * Parameters:  y, x, y0, x0 (coords and size of window)         *
+@@ -494,7 +553,7 @@ void IntroScreen() {
+ * Returns:     none                                             *
+ * Description: Open level file and load it into memory          *
+ ****************************************************************/
 -void LoadLevel(char levelfile[100]) {
 +void LoadLevel(char* levelfile) {
  
- 	int a = 0; int b = 0;
- 	char error[255] = "Cannot find level file: ";
-@@ -373,7 +444,7 @@
-         fin = fopen(levelfile, "r");
- 
-         //Make sure it didn't fail
--        if(!(fin)) { strcat(error, levelfile); ExitProgram(error); }
-+        if(!(fin)) { strncat(error, levelfile, 230); ExitProgram(error); }
- 
-         //Open file and load the level into the array
-         for(a = 0; a < 29; a++) {
-@@ -398,7 +469,7 @@
- 
- }
- 
+     int a = 0; int b = 0;
+     size_t l;
+@@ -555,7 +614,7 @@ void LoadLevel(char levelfile[100]) {
+ * Returns:     none                                             *
+ * Description: Control the main execution of the game           *
+ ****************************************************************/
 -void MainLoop() {
 +int MainLoop() {
  
- 	DrawWindow();
- 	wrefresh(win);
-@@ -406,8 +477,8 @@
- 	usleep(1000000);
+     DrawWindow();                    //Draw the screen
+     wrefresh(win); wrefresh(status); //Refresh it just to make sure
+@@ -564,15 +623,15 @@ void MainLoop() {
+     /* Move Pacman. Move ghosts. Check for extra life awarded
+     from points. Pause for a brief moment. Repeat until all pellets are eaten */
+     do {
+-        MovePacman();    DrawWindow();    CheckCollision();
+-        MoveGhosts();    DrawWindow();    CheckCollision();
++        MovePacman();    DrawWindow();    if (CheckCollision() == 1) return 1;
++        MoveGhosts();    DrawWindow();    if (CheckCollision() == 1) return 1;
+         if(Points > FreeLife) { Lives++; FreeLife *= 2;}
+         Delay();
+     } while (Food > 0);
  
- 	do {
--		MovePacman();	DrawWindow();	CheckCollision();
--		MoveGhosts();	DrawWindow();	CheckCollision();
-+		MovePacman();	DrawWindow();	if(CheckCollision() == 1) return 1;
-+		MoveGhosts();	DrawWindow();	if(CheckCollision() == 1) return 1;
- 		if(Points > FreeLife) { Lives++; FreeLife *= 2;}
- 		Delay();
- 
-@@ -416,6 +487,7 @@
- 	DrawWindow();
- 	usleep(1000000);
- 
-+	return 0;
+     DrawWindow();                   //Redraw window and...
+     usleep(1000000);                //Pause, level complete
+-
++    return 0;
  }
  
- void MoveGhosts() {
-@@ -424,6 +496,7 @@
- 	int tmpdx = 0; int tmpdy = 0;
- 	int checksides[] = { 0, 0, 0, 0, 0, 0 };
- 	static int SlowerGhosts = 0;
-+	int tmp;
- 
- 	if(Invincible == 1) {
- 		SlowerGhosts++;
-@@ -445,10 +518,18 @@
- 
- 		//Determine which directions we can go
- 		for(b = 0; b < 4; b++) checksides[b] = 0;
--		if(Level[Loc[a][0] + 1][Loc[a][1]] != 1) checksides[0] = 1;
--		if(Level[Loc[a][0] - 1][Loc[a][1]] != 1) checksides[1] = 1;
--		if(Level[Loc[a][0]][Loc[a][1] + 1] != 1) checksides[2] = 1;
--		if(Level[Loc[a][0]][Loc[a][1] - 1] != 1) checksides[3] = 1;
-+		if(Loc[a][0] == 28) tmp = 0;
-+		else tmp = Loc[a][0] + 1;
-+		if(Level[tmp][Loc[a][1]] != 1) checksides[0] = 1;
-+		if(Loc[a][0] == 0) tmp = 28;
-+		else tmp = Loc[a][0] - 1;
-+		if(Level[tmp][Loc[a][1]] != 1) checksides[1] = 1;
-+		if(Loc[a][1] == 27) tmp = 0;
-+		else tmp = Loc[a][1] + 1;
-+		if(Level[Loc[a][0]][tmp] != 1) checksides[2] = 1;
-+		if(Loc[a][1] == 0) tmp = 27;
-+		else tmp = Loc[a][1] - 1;
-+		if(Level[Loc[a][0]][tmp] != 1) checksides[3] = 1;
- 
- 		//Don't do 180 unless we have to
- 		c = 0; for(b = 0; b < 4; b++) if(checksides[b] == 1) c++;
-@@ -559,3 +640,11 @@
- 	} while (chtmp == ERR);
+ /****************************************************************
+@@ -748,3 +807,12 @@ void PauseGame() {
+     } while (chtmp == ERR);
  
  }
 +
 +void PrintHelp(char* name) {
-+	printf("Usage: %s [OPTION]\n\n", name);
-+	printf("Options:\n");
-+	printf("  -h, --help        print help\n");
-+	printf("  --level=[1..9]    start at specified standard level\n");
-+	printf("  --level=LEVEL     play specified non-standard LEVEL\n");
++    printf("Usage: %s [OPTION]\n\n", name);
++    printf("Options:\n");
++    printf("  -h, --help        print help\n");
++    printf("  --level=[1..9]    start at specified standard level\n");
++    printf("  --level=LEVEL     play specified non-standard LEVEL\n");
 +}
++
