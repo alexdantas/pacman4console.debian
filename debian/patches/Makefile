@@ -1,29 +1,23 @@
 Description: makes Makefile compliant with Debian and adds GCC hardening.
 Author: Joao Eriberto Mota Filho <eriberto@eriberto.pro.br>
 Last-Update: 2014-02-12
---- a/Makefile
-+++ b/Makefile
-@@ -1,17 +1,12 @@
- all:
--	gcc -lncurses pacman.c     -o pacman
--	gcc -lncurses pacmanedit.c -o pacmanedit
-+	gcc pacman.c     -o pacman     $(CPPFLAGS) $(CFLAGS) $(LDFLAGS) -lncurses
-+	gcc pacmanedit.c -o pacmanedit $(CPPFLAGS) $(CFLAGS) $(LDFLAGS) -lncurses
- 
- install:	all
--	cp pacman /usr/local/bin
--	cp pacmanedit /usr/local/bin
--	mkdir -p /usr/local/share/pacman
--	cp -fR Levels/ /usr/local/share/pacman/
--	chown root:games /usr/local/bin/pacman
--	chown root:games /usr/local/share/pacman -R
--	chmod 750 /usr/local/bin/pacman
--	chmod 750 /usr/local/bin/pacmanedit
--	chmod 750 /usr/local/share/pacman/ -R
+--- pacman4console.orig/Makefile
++++ pacman4console/Makefile
+@@ -9,12 +9,11 @@ all:
+ install:    all
+ 	mkdir -p $(DESTDIR)$(bindir)
+ 	mkdir -p $(DESTDIR)$(datarootdir)/pacman
+-	cp -fR Levels/ $(DESTDIR)$(datarootdir)/pacman/
+-	-chown root:games $(DESTDIR)$(bindir)/pacman
+-	-chown root:games $(DESTDIR)$(datarootdir)/pacman -R
+-	chmod 750 $(DESTDIR)$(bindir)/pacman
+-	chmod 750 $(DESTDIR)$(bindir)/pacmanedit
+-	chmod 750 $(DESTDIR)$(datarootdir)/pacman/ -R
 +	install -D pacman $(DESTDIR)/usr/games/pacman4console
 +	install -D pacmanedit $(DESTDIR)/usr/bin/pacman4consoleedit
 +	install -d $(DESTDIR)/usr/share/pacman4console/Levels
 +	install -m 644 Levels/*dat $(DESTDIR)/usr/share/pacman4console/Levels/
++
  
  uninstall:
- 	rm -f /usr/local/bin/pacman
+ 	rm -f $(DESTDIR)$(bindir)/pacman
