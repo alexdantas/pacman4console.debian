@@ -12,7 +12,7 @@ Description: fix some problems and add features.
                      choosing option).
                    * Changed option syntax for level choosing.
 Author: Yannic Scheper <ys42@cd42.de>
-Last-Update: 2014-02-10
+Last-Update: 2014-08-12
 --- pacman4console.orig/pacman.c
 +++ pacman4console/pacman.c
 @@ -31,7 +31,7 @@

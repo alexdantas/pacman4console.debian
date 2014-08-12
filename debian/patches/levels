@@ -1,6 +1,6 @@
 Description: change levels location in pacman.h.
 Author: Joao Eriberto Mota Filho <eriberto@eriberto.pro.br>
-Last-Update: 2013-05-06
+Last-Update: 2014-08-12
 Index: pacman4console/pacman.h
 ===================================================================
 --- pacman4console.orig/pacman.h

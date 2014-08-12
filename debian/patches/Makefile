@@ -1,6 +1,6 @@
 Description: makes Makefile compliant with Debian and adds GCC hardening.
 Author: Joao Eriberto Mota Filho <eriberto@eriberto.pro.br>
-Last-Update: 2014-02-12
+Last-Update: 2014-08-12
 Index: pacman4console/Makefile
 ===================================================================
 --- pacman4console.orig/Makefile
