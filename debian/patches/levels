@@ -1,16 +1,18 @@
 Description: change levels location in pacman.h.
 Author: Joao Eriberto Mota Filho <eriberto@eriberto.pro.br>
 Last-Update: 2013-05-06
+Index: pacman4console/pacman.h
+===================================================================
 --- pacman4console.orig/pacman.h
 +++ pacman4console/pacman.h
-@@ -1,9 +1,9 @@
+@@ -1,9 +1,7 @@
  // Some variables that you may want to change
  
- #ifndef DATAROOTDIR
+-#ifndef DATAROOTDIR
 -#    define DATAROOTDIR "/usr/local/share"
-+#    define DATAROOTDIR "/usr/share"
- #endif
+-#endif
 -#define LEVELS_FILE DATAROOTDIR "/pacman/Levels/level__.dat"
++#define DATAROOTDIR "/usr/share"
 +#define LEVELS_FILE DATAROOTDIR "/pacman4console/Levels/level__.dat"
  char LevelFile[] = LEVELS_FILE;     //Locations of default levels
  int FreeLife = 1000;                //Starting points for free life
