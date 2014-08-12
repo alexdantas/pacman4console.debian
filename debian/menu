@@ -1,6 +1,0 @@
-?package(pacman4console):needs="text" \
-    section="Games/Action" \
-    title="Pacman for Console" \
-    longtitle="Pacman for Console - console based pacman game" \
-    command="/usr/games/pacman4console" \
-    icon="/usr/share/pixmaps/pacman4console.xpm"
