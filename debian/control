@@ -4,8 +4,8 @@ Priority: optional
 Maintainer: Alexandre Dantas <eu@alexdantas.net>
 Build-Depends: debhelper (>= 9), dpkg-dev (>= 1.16.1~), libncurses5-dev
 Standards-Version: 3.9.5
-Vcs-Browser: http://anonscm.debian.org/gitweb/?p=collab-maint/pacman4console.git
-Vcs-Git: git://anonscm.debian.org/collab-maint/pacman4console.git
+Vcs-Git: git://github.com/alexdantas/pacman4console.debian.git -b master
+Vcs-Browser: https://github.com/alexdantas/pacman4console.debian
 Homepage: https://sites.google.com/site/doctormike/pacman.html
 
 Package: pacman4console
