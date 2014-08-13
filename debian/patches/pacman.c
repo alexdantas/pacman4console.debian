@@ -1,18 +1,21 @@
-Description: fix some problems and add features.
-               - Problems fixed:
-                   * Changed screen/window resolution error message.
-                   * Bugfix for possible buffer overflow when choosing a
-                     level. (Closes #641652)
-                   * Bugfix for possible index out of bound when going through
-                     a border while playing. (Closes #641657)
-               - Feature to allow create a menu icon for X (Closes: #737997):
-                   * Game Over screen which allows to exit or to restart.
-               - Another features:
-                   * Added a help option (documents before undocumented level
-                     choosing option).
-                   * Changed option syntax for level choosing.
+Subject: Fix some problems and add features.
+
+- Problems fixed:
+  * Changed screen/window resolution error message.
+  * Bugfix for possible buffer overflow when choosing a
+    level. (Closes #641652)
+  * Bugfix for possible index out of bound when going through
+    a border while playing. (Closes #641657)
+- Feature to allow create a menu icon for X (Closes: #737997):
+  * Game Over screen which allows to exit or to restart.
+- Another features:
+  * Added a help option (documents before undocumented level
+    choosing option).
+  * Changed option syntax for level choosing.
+
 Author: Yannic Scheper <ys42@cd42.de>
-Last-Update: 2014-08-12
+Author: Alexandre Dantas <eu@alexdantas.net>
+Last-Update: 2014-08-13
 --- pacman4console.orig/pacman.c
 +++ pacman4console/pacman.c
 @@ -31,7 +31,7 @@
