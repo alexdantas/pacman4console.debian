@@ -2,7 +2,7 @@ Source: pacman4console
 Section: games
 Priority: optional
 Maintainer: Alexandre Dantas <eu@alexdantas.net>
-Build-Depends: debhelper (>= 9), dpkg-dev (>= 1.16.1~), libncurses5-dev
+Build-Depends: debhelper (>= 9), libncurses5-dev
 Standards-Version: 3.9.5
 Vcs-Git: git://github.com/alexdantas/pacman4console.debian.git -b master
 Vcs-Browser: https://github.com/alexdantas/pacman4console.debian
@@ -11,10 +11,7 @@ Homepage: https://sites.google.com/site/doctormike/pacman.html
 Package: pacman4console
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
-Description: console based pacman game
- This is a simple but very good pacman game. Also, its source code is very
- simple and well commented so it may be a good reference for learning ncurses
- and C programming.
+Description: Console based pacman game
+ Pacman4Console is a simple, ASCII character based, pacman game.
  .
- Pacman4Console is an ASCII character based game. This game has nine levels.
- But you can make your own levels.
+ It has nine levels by default, and you can make your own.
