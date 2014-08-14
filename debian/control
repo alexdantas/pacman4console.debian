@@ -11,7 +11,9 @@ Homepage: https://sites.google.com/site/doctormike/pacman.html
 Package: pacman4console
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
-Description: Console based pacman game
- Pacman4Console is a simple, ASCII character based, pacman game.
+Description: ncurses-based pacman game
+ Pacman4Console is a simple pacman game for the terminal.
+ It is played on the command-line, with ASCII character graphics.
  .
- It has nine levels by default, and you can make your own.
+ It has nine levels by default, and you can make your own with
+ its own level editor.
