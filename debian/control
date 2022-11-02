@@ -2,9 +2,9 @@ Source: pacman4console
 Section: games
 Priority: optional
 Maintainer: Alexandre Dantas <eu@alexdantas.net>
-Build-Depends: debhelper (>= 9), libncurses5-dev
+Build-Depends: debhelper-compat (= 13), libncurses5-dev
 Standards-Version: 3.9.5
-Vcs-Git: git://github.com/alexdantas/pacman4console.debian.git -b master
+Vcs-Git: https://github.com/alexdantas/pacman4console.debian.git -b master
 Vcs-Browser: https://github.com/alexdantas/pacman4console.debian
 Homepage: https://sites.google.com/site/doctormike/pacman.html
 
